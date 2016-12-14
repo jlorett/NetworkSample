@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Joshua on 12/13/2016.
+ * Builds a request with options to set the host, authenticator, and request headers.
  */
 
 public class RequestBuilder {
@@ -50,6 +50,7 @@ public class RequestBuilder {
 
         if(requestHeaders != null) {
             httpClientBuilder.interceptors().clear();
+
             httpClientBuilder.interceptors().add(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {

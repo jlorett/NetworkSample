@@ -3,7 +3,7 @@ package com.joshualorett.networksample.network;
 import retrofit2.Response;
 
 /**
- * Created by Joshua on 12/13/2016.
+ * A network error object with helpful information.
  */
 
 public class NetworkError {

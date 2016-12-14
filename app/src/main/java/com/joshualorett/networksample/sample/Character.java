@@ -1,7 +1,7 @@
 package com.joshualorett.networksample.sample;
 
 /**
- * Created by Joshua on 12/13/2016.
+ * Sample data object of a "character".
  */
 
 public class Character {

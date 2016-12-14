@@ -1,7 +1,7 @@
 package com.joshualorett.networksample.network;
 
 /**
- * Created by Joshua on 12/13/2016.
+ * Request header that has a key value pair.
  */
 
 public class RequestHeader {

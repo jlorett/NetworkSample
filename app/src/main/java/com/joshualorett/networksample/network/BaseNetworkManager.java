@@ -1,10 +1,7 @@
 package com.joshualorett.networksample.network;
 
-import android.util.Log;
-
 import java.io.IOException;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,12 +11,16 @@ import retrofit2.Response;
  */
 
 public class BaseNetworkManager implements NetworkManager {
-    private OkHttpClient httpClient;
+    public BaseNetworkManager() {}
 
-    public BaseNetworkManager(OkHttpClient httpClient) {
-        this.httpClient = httpClient;
-    }
-
+    /***
+     * Execute a request synchronously.
+     * @param call Network request call.
+     * @param listener Network callback.
+     * @param <T> Expected response object.
+     * @throws IOException if a problem occurred talking to the server.
+     * @throws RuntimeException (and subclasses) if an unexpected error occurs creating the request
+     */
     @Override
     public <T> void execute(Call<T> call, NetworkListener listener) throws IOException {
         Response<T> response = call.execute();
@@ -33,6 +34,12 @@ public class BaseNetworkManager implements NetworkManager {
         }
     }
 
+    /***
+     * Execute a request asynchronously.
+     * @param call Network request call.
+     * @param listener Network callback.
+     * @param <T> Expected response object.
+     */
     @Override
     public <T> void enqueue(Call<T> call, final NetworkListener listener) {
         call.enqueue(new Callback<T>() {

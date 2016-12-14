@@ -1,19 +1,22 @@
 package com.joshualorett.networksample.sample;
 
+import com.joshualorett.networksample.network.BaseNetworkManager;
+import com.joshualorett.networksample.network.Cancellable;
+import com.joshualorett.networksample.network.HttpClientProvider;
 import com.joshualorett.networksample.network.NetworkError;
-import com.joshualorett.networksample.network.NetworkListener;
 import com.joshualorett.networksample.network.NetworkManager;
 import com.joshualorett.networksample.network.RequestBuilder;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.GET;
 
 /**
- * Created by Joshua on 12/13/2016.
+ * Get characters from a network.
  */
 
-public class NetworkCharacterGetter implements CharacterGetter, NetworkListener {
+public class NetworkCharacterGetter implements CharacterGetter, NetworkManager.NetworkListener, Cancellable {
     private static final String HOST = "";
 
     private NetworkManager networkManager;
@@ -21,6 +24,8 @@ public class NetworkCharacterGetter implements CharacterGetter, NetworkListener 
     private RequestBuilder requestBuilder;
 
     private CharacterGetterListener listener;
+
+    private Call call;
 
     /**
      * Get characters from a network request.
@@ -38,7 +43,9 @@ public class NetworkCharacterGetter implements CharacterGetter, NetworkListener 
 
         CharacterService service = requestBuilder.host(HOST).build(CharacterService.class);
 
-        networkManager.enqueue(service.getCharacters(), this);
+        call = service.getCharacters();
+
+        networkManager.enqueue(call, this);
     }
 
     // Network callbacks
@@ -52,9 +59,29 @@ public class NetworkCharacterGetter implements CharacterGetter, NetworkListener 
         listener.onGetCharacterError();
     }
 
+    @Override
+    public void cancel() {
+        if(call != null && !call.isExecuted() && !call.isCanceled()) {
+            call.cancel();
+        }
+    }
+
     // Network request
     interface CharacterService {
         @GET("characters")
         Call<Character[]> getCharacters();
+    }
+
+    // Create a NetworkCharacterGetter instance.
+    public static class Factory {
+        public NetworkCharacterGetter create() {
+            OkHttpClient httpClient = HttpClientProvider.getInstance().getHttpClient();
+
+            NetworkManager networkManager = new BaseNetworkManager();
+
+            RequestBuilder requestBuilder = new RequestBuilder(httpClient);
+
+            return new NetworkCharacterGetter(networkManager, requestBuilder);
+        }
     }
 }
