@@ -30,7 +30,7 @@ public class BaseNetworkManager implements NetworkManager {
 
             NetworkLogger.logResponse(response);
         } else {
-            listener.onNetworkError(new NetworkError());
+            listener.onNetworkError(new NetworkError(response.code()));
         }
     }
 
@@ -50,7 +50,7 @@ public class BaseNetworkManager implements NetworkManager {
 
                     NetworkLogger.logResponse(response);
                 } else {
-                    listener.onNetworkError(new NetworkError());
+                    listener.onNetworkError(new NetworkError(response.code()));
                 }
             }
 

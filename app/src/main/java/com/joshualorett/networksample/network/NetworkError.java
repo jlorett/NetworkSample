@@ -19,6 +19,10 @@ public class NetworkError {
         this.response = response;
     }
 
+    public NetworkError(int statusCode) {
+        this.statusCode = statusCode;
+    }
+
     public int getStatusCode() {
         return statusCode;
     }
