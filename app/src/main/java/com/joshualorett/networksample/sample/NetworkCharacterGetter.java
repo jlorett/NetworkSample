@@ -80,7 +80,17 @@ public class NetworkCharacterGetter implements CharacterGetter, NetworkManager.N
 
     // Create a NetworkCharacterGetter instance.
     public static class Factory {
-        public NetworkCharacterGetter create(Context context) throws IOException {
+        public static NetworkCharacterGetter create() throws IOException {
+            OkHttpClient httpClient = HttpClientProvider.getInstance().getHttpClient();
+
+            NetworkManager networkManager = new BaseNetworkManager();
+
+            RequestBuilder requestBuilder = new RequestBuilder(httpClient);
+
+            return new NetworkCharacterGetter(networkManager, requestBuilder);
+        }
+
+        public static NetworkCharacterGetter createWithMock(Context context) throws IOException {
             OkHttpClient httpClient = HttpClientProvider.getInstance().getHttpClient();
 
             NetworkManager networkManager = new BaseNetworkManager();
