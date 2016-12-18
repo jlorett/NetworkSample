@@ -1,7 +1,7 @@
 package com.joshualorett.networksample.sample;
 
 import com.joshualorett.networksample.network.BaseNetworkManager;
-import com.joshualorett.networksample.network.Cancellable;
+import com.joshualorett.networksample.common.Cancellable;
 import com.joshualorett.networksample.network.HttpClientProvider;
 import com.joshualorett.networksample.network.NetworkError;
 import com.joshualorett.networksample.network.NetworkManager;

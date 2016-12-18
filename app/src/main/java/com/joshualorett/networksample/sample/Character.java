@@ -1,12 +1,16 @@
 package com.joshualorett.networksample.sample;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Sample data object of a "character".
  */
 
 public class Character {
+    @SerializedName("id")
     private int id;
 
+    @SerializedName("name")
     private String name;
 
     public Character() {}

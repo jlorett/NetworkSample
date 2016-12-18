@@ -1,4 +1,4 @@
-package com.joshualorett.networksample.network;
+package com.joshualorett.networksample.common;
 
 /**
  * An action that is cancellable.
