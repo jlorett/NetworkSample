@@ -47,7 +47,7 @@ public class NetworkCharacterGetter implements CharacterGetter, NetworkManager.N
     public void get(CharacterGetterListener listener) {
         this.listener = listener;
 
-        CharacterService service = requestBuilder.host(HOST).build(CharacterService.class);
+        CharacterService service = requestBuilder.baseUrl(HOST).build(CharacterService.class);
 
         call = service.getCharacters();
 
@@ -85,7 +85,7 @@ public class NetworkCharacterGetter implements CharacterGetter, NetworkManager.N
 
             NetworkManager networkManager = new BaseNetworkManager();
 
-            RequestBuilder requestBuilder = new RequestBuilder(httpClient);
+            RequestBuilder requestBuilder = new RequestBuilder(httpClient.newBuilder());
 
             return new NetworkCharacterGetter(networkManager, requestBuilder);
         }
@@ -93,11 +93,13 @@ public class NetworkCharacterGetter implements CharacterGetter, NetworkManager.N
         public static NetworkCharacterGetter createWithMock(Context context) throws IOException {
             OkHttpClient httpClient = HttpClientProvider.getInstance().getHttpClient();
 
+            // Use mock data for request.
+            OkHttpClient.Builder httpClientBuilder = httpClient.newBuilder()
+                    .addInterceptor(new MockJsonInterceptor(AssetLoader.load(context, R.raw.sample), 200));
+
             NetworkManager networkManager = new BaseNetworkManager();
 
-            // Use mock data for request.
-            RequestBuilder requestBuilder = new RequestBuilder(httpClient)
-                    .addInterceptor(new MockJsonInterceptor(AssetLoader.load(context, R.raw.sample), 200));
+            RequestBuilder requestBuilder = new RequestBuilder(httpClientBuilder);
 
             return new NetworkCharacterGetter(networkManager, requestBuilder);
         }
