@@ -7,6 +7,7 @@ import java.io.IOException;
 import retrofit2.Response;
 
 /**
+ * Log a network response.
  * Created by Joshua on 12/13/2016.
  */
 

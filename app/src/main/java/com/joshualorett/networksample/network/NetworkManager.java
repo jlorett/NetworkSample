@@ -19,7 +19,7 @@ public interface NetworkManager {
         void onNetworkError(NetworkError error);
     }
 
-   <T> void execute(Call<T> call, NetworkListener listener) throws IOException;
+    <T> void execute(Call<T> call, NetworkListener listener) throws IOException;
 
     <T> void enqueue(Call<T> call, NetworkListener listener);
 }

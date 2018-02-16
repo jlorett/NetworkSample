@@ -7,6 +7,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
+ * Network manager implementation.
  * Created by Joshua on 12/13/2016.
  */
 

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         CharacterGetter characterGetter = null;
         try {
-            characterGetter = NetworkCharacterGetter.Factory.createWithMock(this);
+            characterGetter = NetworkCharacterGetter.Factory.createWithMock();
         } catch (IOException e) {
             String error = String.format(Locale.getDefault(), "%s\n%s",
                     getString(R.string.get_character_error),

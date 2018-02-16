@@ -7,6 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
+ * Intercept requests to include an authorization header.
  * Created by Joshua on 12/18/2016.
  */
 

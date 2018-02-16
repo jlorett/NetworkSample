@@ -9,6 +9,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
+ * Fakes a response with the given content.
  * Created by Joshua on 12/18/2016.
  */
 

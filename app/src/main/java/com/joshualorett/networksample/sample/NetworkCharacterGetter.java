@@ -2,8 +2,6 @@ package com.joshualorett.networksample.sample;
 
 import android.content.Context;
 
-import com.joshualorett.networksample.R;
-import com.joshualorett.networksample.common.AssetLoader;
 import com.joshualorett.networksample.network.BaseNetworkManager;
 import com.joshualorett.networksample.common.Cancellable;
 import com.joshualorett.networksample.network.HttpClientProvider;
@@ -57,7 +55,11 @@ public class NetworkCharacterGetter implements CharacterGetter, NetworkManager.N
     // Network callbacks
     @Override
     public void onResponse(Response response) {
-        listener.onGetCharacter((Character[]) response.body());
+        if(response.isSuccessful()) {
+            listener.onGetCharacter((Character[]) response.body());
+        } else {
+            listener.onGetCharacterError(response.raw().code());
+        }
     }
 
     @Override
@@ -90,12 +92,17 @@ public class NetworkCharacterGetter implements CharacterGetter, NetworkManager.N
             return new NetworkCharacterGetter(networkManager, requestBuilder);
         }
 
-        public static NetworkCharacterGetter createWithMock(Context context) throws IOException {
+        public static NetworkCharacterGetter createWithMock() throws IOException {
             OkHttpClient httpClient = HttpClientProvider.getInstance().getHttpClient();
 
             // Use mock data for request.
             OkHttpClient.Builder httpClientBuilder = httpClient.newBuilder()
-                    .addInterceptor(new MockJsonInterceptor(AssetLoader.load(context, R.raw.sample), 200));
+                    .addInterceptor(new MockJsonInterceptor("[\n" +
+                            "  {\n" +
+                            "    \"name\": \"Lisa\",\n" +
+                            "    \"id\" : 1\n" +
+                            "  }" +
+                            "]", 200));
 
             NetworkManager networkManager = new BaseNetworkManager();
 
